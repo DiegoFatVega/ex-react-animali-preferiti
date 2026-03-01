@@ -7,6 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I miei animali Preferiti</title>
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;  //al posto di importare useState come facevamo, lo destrutturiamo dalla variabile React importata tramite CDN
+        const ReactApp = () => {
+            const animali = ["Animale_1", "Animale_2", "Animale_3"]
+            return (
+                <details>
+                    <summary>animali</summary>
+                    <ul>
+                        {animali.map((animale, index) => (
+                            <li key={index}>{animale}</li>
+                        ))}
+                    </ul>
+                </details>
+            )
+        } 
+    </script> <!-- questa è la creazione del componente React -->
+
+    <script type="text/babel">
+        const { createRoot } = ReactDOM;
+
+        const listaAnimali = document.querySelector('.lista-animali');
+        const root = createRoot(listaAnimali);
+        root.render(<ReactApp />)
+    </script> <!-- questo è il montaggio nel DOM -->
+
 </head>
 
 <body>
@@ -14,6 +44,9 @@
         <h1>I miei animali Preferiti</h1>
     </header>
     <main>
+        <div class="lista-animali">
+
+        </div>
         <figure>
             <img src="https://picsum.photos/400/300" alt="Immagine Casuale">
         </figure>
