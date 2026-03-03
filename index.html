@@ -12,13 +12,31 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- millestone 1-2 📌 -->
+
+    <!--PROP-->
+    <script type="text/babel">
+        function AnimalsList({ content }) {
+            return (
+                <details>
+                    <summary>Animali</summary>
+                    <ul>
+                        {content.map((animal, i) => (
+                            <li key={i}>{animal}</li>
+                        ))}
+                    </ul>
+                </details>
+            )
+        }
+    </script>
+
+    <!-- questa è la creazione del componente React -->
     <script type="text/babel">
 
         const { useState } = React;  //al posto di importare useState come facevamo, lo destrutturiamo dalla variabile React importata tramite CDN
-
         const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
-        const ReactApp = () => {
+        function ReactApp() {
 
             const [animals, setAnimals] = useState([])
 
@@ -30,27 +48,63 @@
             return (
                 <>
                     <button onClick={addAnimal}>Aggiungi Animale</button>
-                    <details>
-                        <summary>animali</summary>
-                        <ul>
-                            {animals.map((animal, i) => (
-                                <li key={i}>{animal}</li>
-                            ))}
-                        </ul>
-                    </details>
+                    <AnimalsList content={animals} />
                 </>
             )
         } 
-    </script> <!-- questa è la creazione del componente React -->
+    </script>
 
+    <!-- questo è il montaggio nella DOM -->
     <script type="text/babel">
         const { createRoot } = ReactDOM;
 
         const listaAnimali = document.querySelector('.lista-animali');
         const root = createRoot(listaAnimali);
         root.render(<ReactApp />)
-    </script> <!-- questo è il montaggio nel DOM -->
 
+    </script>
+
+    <!-- millestone 3 📌 -->
+    <script type="text/babel">
+        function Modal({
+            title,
+            content,
+            show = false,
+            onClose = () => { }
+
+        }) {
+            return show && ReactDOM.createPortal(
+                <div className="modal-container">
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        <p>{content}</p>
+                        <button onClick={onClose}>Annulla</button>
+                    </div>
+                </div>,
+                document.body
+            )
+        }
+    </script>
+
+    <style>
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
